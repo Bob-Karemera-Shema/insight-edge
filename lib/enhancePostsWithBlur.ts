@@ -1,4 +1,4 @@
-import { IPost } from "@/lib/types";
+import { IDetailedPost, IPost } from "@/lib/types";
 import { getBlurDataURLFromRemoteURL } from "@/lib/getBlurDataURL";
 
 export async function enhancePostsWithBlur(posts: IPost[]) {
@@ -20,4 +20,21 @@ export async function enhancePostsWithBlur(posts: IPost[]) {
       };
     })
   );
+}
+
+export async function enhancePostWithBLur(post: IDetailedPost) {
+  const coverBlur = await getBlurDataURLFromRemoteURL(
+    post.cover_image,
+    "placeholder.jpg"
+  );
+  const avatarBlur = await getBlurDataURLFromRemoteURL(
+    post.user.profile_image,
+    "avatar.png"
+  );
+
+  return {
+    ...post,
+    coverBlur,
+    avatarBlur,
+  };
 }

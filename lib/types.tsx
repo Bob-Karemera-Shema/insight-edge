@@ -48,3 +48,18 @@ export interface IPostWithBlur extends IPost {
     coverBlur: string;
     avatarBlur: string;
 }
+
+export interface IDetailedPost extends IPost {
+    "body_html": string;
+    "body_markdown": string;
+    "flare_tag": {
+        "name": string;
+        "bg_color_hex": string;
+        "text_color_hex": string;
+    }
+}
+
+export interface IDetailedPostWithBlur extends IDetailedPost {
+    coverBlur: string;
+    avatarBlur: string;
+}
