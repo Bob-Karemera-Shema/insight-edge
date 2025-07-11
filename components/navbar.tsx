@@ -8,7 +8,7 @@ import { Button } from "./ui/button";
 
 export const Navbar = () => {
     return (
-        <nav className="flex items-center justify-between gap-8 py-6 px-4 max-w-5xl mx-auto">
+        <nav className="flex items-center justify-between gap-8 py-6 px-4 lg:px-0 max-w-5xl mx-auto">
             <Link href='/' aria-label="Home page">
                 <Logo />
             </Link>

@@ -33,10 +33,10 @@ export default function RootLayout({
         >
           <SidebarProvider defaultOpen={false}>
             <AppSidebar />
-            <main className="w-full">
+            <div className="w-full">
               <Navbar />
               {children}
-            </main>
+            </div>
           </SidebarProvider>
         </ThemeProvider>
       </body>
