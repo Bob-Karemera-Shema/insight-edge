@@ -9,12 +9,16 @@ export async function getBlurDataURLFromLocalPath(relativePath: string) {
   return base64;
 }
 
-export async function getBlurDataURLFromRemoteURL(url: string, fallback: string) {
+export async function getBlurDataURLFromRemoteURL(url: string | null, fallback: string) {
   try {
+    if(!url) return await getBlurDataURLFromLocalPath(fallback);
+
     const res = await fetch(url);
     if (!res.ok) throw new Error('Failed to get blur placeholder');
+
     const buffer = Buffer.from(await res.arrayBuffer());
     const { base64 } = await getPlaiceholder(buffer);
+    
     return base64;
   } catch (err) {
     console.error(err);

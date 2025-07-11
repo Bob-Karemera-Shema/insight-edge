@@ -43,3 +43,8 @@ export interface IPost {
         "profile_image_90": string;
     }
 }
+
+export interface IPostWithBlur extends IPost {
+    coverBlur: string;
+    avatarBlur: string;
+}
