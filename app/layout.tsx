@@ -7,6 +7,7 @@ import { AppSidebar } from "@/components/app-sidebar";
 import { Toaster } from "sonner";
 import "./globals.css";
 import { SessionProvider } from "next-auth/react";
+import { Footer } from "@/components/footer";
 
 const workSans = Work_Sans({
   subsets: ["latin"]
@@ -42,6 +43,7 @@ export default function RootLayout({
                 </header>
                 {children}
                 <Toaster position="top-right" />
+                <Footer />
               </div>
             </SidebarProvider>
           </SessionProvider>
