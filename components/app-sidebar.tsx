@@ -1,3 +1,5 @@
+'use client';
+
 import {
     Sidebar,
     SidebarContent,
@@ -9,14 +11,24 @@ import {
     SidebarMenuButton,
     SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { FaSignOutAlt } from "react-icons/fa";
 import { navlinks } from "@/lib/navlinks";
 import Link from "next/link";
 import { Logo } from "./logo";
 import { Button } from "./ui/button";
+import { signOut, useSession } from "next-auth/react";
+import { redirect, usePathname } from "next/navigation";
 
-export const AppSidebar = async () => {
+export const AppSidebar = () => {
+    const { data: session } = useSession();
+    const pathname = usePathname();
+
+    const handleLogOut = () => {
+        signOut();
+        // Redirect to the home page if on the dashboard
+        if (pathname === '/dashboard') redirect('/');
+    }
+
     return (
         <Sidebar>
             <SidebarHeader>
@@ -32,7 +44,7 @@ export const AppSidebar = async () => {
                                 const { label, link, aria } = navlink
                                 return (
                                     <SidebarMenuItem key={label + link}>
-                                        <SidebarMenuButton className="hover:bg-custom-blue cursor-pointer">
+                                        <SidebarMenuButton className={`${pathname === link && 'bg-custom-blue'} hover:bg-custom-blue cursor-pointer`}>
                                             <Link href={link} aria-label={aria}>
                                                 {label}
                                             </Link>
@@ -45,39 +57,45 @@ export const AppSidebar = async () => {
                 </SidebarGroup>
             </SidebarContent>
             <SidebarFooter>
-                <div className="flex flex-col space-y-2 mb-8">
-                    <Button
-                        size="lg"
-                        variant="outline"
-                        className="cursor-pointer"
-                    >
-                        Login
-                    </Button>
-                    <Button
-                        size="lg"
-                        className="cursor-pointer bg-custom-blue text-white hover:bg-custom-blue/80"
-                    >
-                        Register
-                    </Button>
+                <div className="flex flex-col gap-4 mb-8">
+                    {
+                        session?.user ? (
+                            <>
+                                {
+                                    session.user.fullName && (
+                                        <div className="text-center">
+                                            Welcome, <span>{session?.user.fullName}</span>
+                                        </div>
+                                    )
+                                }
+                                <Button
+                                    size="lg"
+                                    onClick={handleLogOut}
+                                    className="flex items-center gap-2 cursor-pointer text-white bg-red-600 hover:bg-red-600/80"
+                                >
+                                    <FaSignOutAlt />
+                                    Log Out
+                                </Button>
+                            </>
+                        ) : (
+                            <>
+                                <Button
+                                    size="lg"
+                                    variant="outline"
+                                    className="cursor-pointer"
+                                >
+                                    Login
+                                </Button>
+                                <Button
+                                    size="lg"
+                                    className="cursor-pointer bg-custom-blue text-white hover:bg-custom-blue/80"
+                                >
+                                    Register
+                                </Button>
+                            </>
+                        )
+                    }
                 </div>
-                <form className="flex flex-col gap-4 items-center mb-8">
-                    <Link href="#" className="flex items-center gap-2">
-                        <div className="bg-light-container p-2 rounded-full">
-                            <Avatar>
-                                <AvatarImage src="https://github.com/evilrabbit.png" alt="@evilrabbit" />
-                                <AvatarFallback>CN</AvatarFallback>
-                            </Avatar>
-                        </div>
-                        Jack Bauer
-                    </Link>
-                    <Button
-                        size="lg"
-                        className="flex items-center gap-2 cursor-pointer text-white bg-red-600 hover:bg-red-600/80"
-                    >
-                        <FaSignOutAlt />
-                        Sign Out
-                    </Button>
-                </form>
             </SidebarFooter>
         </Sidebar>
     )

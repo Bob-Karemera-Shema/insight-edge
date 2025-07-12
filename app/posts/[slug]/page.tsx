@@ -79,6 +79,7 @@ export default async function PostPage({
                 className="w-full h-auto object-cover rounded-lg"
             />
             <article
+                className="prose space-y-6"
                 dangerouslySetInnerHTML={{ __html: body_html }}
             />
         </main>

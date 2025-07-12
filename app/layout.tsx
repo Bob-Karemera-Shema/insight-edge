@@ -6,6 +6,7 @@ import { SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
 import { Toaster } from "sonner";
 import "./globals.css";
+import { SessionProvider } from "next-auth/react";
 
 const workSans = Work_Sans({
   subsets: ["latin"]
@@ -32,14 +33,18 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <SidebarProvider defaultOpen={false}>
-            <AppSidebar />
-            <div className="w-full">
-              <Navbar />
-              {children}
-              <Toaster position="top-right" />
-            </div>
-          </SidebarProvider>
+          <SessionProvider>
+            <SidebarProvider defaultOpen={false}>
+              <AppSidebar />
+              <div className="w-full">
+                <header>
+                  <Navbar />
+                </header>
+                {children}
+                <Toaster position="top-right" />
+              </div>
+            </SidebarProvider>
+          </SessionProvider>
         </ThemeProvider>
       </body>
     </html>
