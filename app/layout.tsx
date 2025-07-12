@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
 import { Work_Sans } from "next/font/google";
 import { Navbar } from "@/components/navbar";
-import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
+import { Toaster } from "sonner";
+import "./globals.css";
 
 const workSans = Work_Sans({
   subsets: ["latin"]
@@ -36,6 +37,7 @@ export default function RootLayout({
             <div className="w-full">
               <Navbar />
               {children}
+              <Toaster position="top-right" />
             </div>
           </SidebarProvider>
         </ThemeProvider>
