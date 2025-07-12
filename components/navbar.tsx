@@ -30,11 +30,17 @@ export const Navbar = () => {
                     {
                         navlinks.map(navlink => {
                             const { label, link, aria } = navlink;
-                            return (
+                            return label === 'Dashboard' ? (
+                                session?.user ? (
+                                    <Link key={label + link} href={link} aria-label={aria}>
+                                        {label}
+                                    </Link>
+                                ) : null
+                            ) : (
                                 <Link key={label + link} href={link} aria-label={aria}>
                                     {label}
                                 </Link>
-                            );
+                            )
                         })
                     }
                 </ul>
