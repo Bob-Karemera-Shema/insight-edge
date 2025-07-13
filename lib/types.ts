@@ -63,3 +63,27 @@ export interface IDetailedPostWithBlur extends IDetailedPost {
     coverBlur: string;
     avatarBlur: string;
 }
+
+export interface LargestContentfulPaint {
+  renderTime?: number;
+  loadTime?: number;
+  size?: number;
+  id?: string;
+  url?: string;
+  element?: Element;
+  startTime?: number;
+  duration?: number;
+  entryType?: string;
+  name?: string;
+  toJSON?: () => any;
+};
+
+export interface WebVital {
+    delta: number;
+    entries: LargestContentfulPaint[];
+    id: string;
+    name: string;
+    navigationType: string;
+    rating: string;
+    value: number;
+}

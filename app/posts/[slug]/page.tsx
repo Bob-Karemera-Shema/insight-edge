@@ -33,7 +33,6 @@ export default async function PostPage({
         minute: "numeric",
         second: "numeric",
     }).format(new Date(buildTime));
-    console.log("Page statically generated at:", buildTime);
 
     const postWithBlur = await enhancePostWithBLur(post);
     const { avatarBlur, body_html, coverBlur, cover_image, published_at, tag_list, user } = postWithBlur;

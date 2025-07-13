@@ -25,7 +25,7 @@ export const Navbar = () => {
             <Link href='/' aria-label="Home page">
                 <Logo />
             </Link>
-            <div className="hidden md:flex items-center space-x-12 lg:space-x-20">
+            <div className="hidden lg:flex items-center space-x-12 lg:space-x-20">
                 <ul className="flex space-x-8">
                     {
                         navlinks.map(navlink => {
@@ -89,7 +89,7 @@ export const Navbar = () => {
                     </div>
                 </div>
             </div>
-            <SidebarTrigger className="block md:hidden cursor-pointer" />
+            <SidebarTrigger className="block lg:hidden cursor-pointer" />
         </nav>
     )
 };

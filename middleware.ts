@@ -16,11 +16,6 @@ export default auth((req) => {
         if (!isLoggedIn) {
             return NextResponse.redirect(new URL("/login", req.url));
         }
-
-        // Optional: Restrict access to admins only
-        // if (session.user.role !== "admin") {
-        //   return NextResponse.redirect(new URL("/unauthorized", request.url));
-        // }
     }
 
     return response;
