@@ -9,6 +9,7 @@ import { Button } from "./ui/button";
 import { redirect, usePathname } from "next/navigation";
 import { signOut, useSession } from "next-auth/react";
 import { FaSignOutAlt } from "react-icons/fa";
+import { NavLink } from "./nav-link";
 
 export const Navbar = () => {
     const { data: session } = useSession();
@@ -29,17 +30,13 @@ export const Navbar = () => {
                 <ul className="flex space-x-8">
                     {
                         navlinks.map(navlink => {
-                            const { label, link, aria } = navlink;
+                            const { label, link } = navlink
                             return label === 'Dashboard' ? (
                                 session?.user ? (
-                                    <Link key={label + link} href={link} aria-label={aria}>
-                                        {label}
-                                    </Link>
+                                    <NavLink key={label + link} navlink={navlink} active={pathname === link} />
                                 ) : null
                             ) : (
-                                <Link key={label + link} href={link} aria-label={aria}>
-                                    {label}
-                                </Link>
+                                <NavLink key={label + link} navlink={navlink} active={pathname === link} />
                             )
                         })
                     }
