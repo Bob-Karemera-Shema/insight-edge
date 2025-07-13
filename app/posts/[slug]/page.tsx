@@ -16,13 +16,14 @@ export async function generateStaticParams() {
 }
 
 export const generateMetadata = async ({ params }: { params: { slug: string } }): Promise<Metadata> => {
-  const { title } = await fetch(`https://dev.to/api/articles/${params.slug}`).then(
+    const { slug } = await params
+    const { title } = await fetch(`https://dev.to/api/articles/${slug}`).then(
         (res) => res.json()
     );
-  return {
-    title,
-    description: `Read our article on ${title}`,
-  };
+    return {
+        title,
+        description: `Read our article on ${title}`,
+    };
 };
 
 export default async function PostPage({
@@ -55,7 +56,7 @@ export default async function PostPage({
     }).format(date);
 
     return (
-        <main className="max-w-4xl mx-auto p-4 lg:px-0 space-y-8">
+        <>
             <div className="flex items-center justify-between gap-4">
                 <p className="text-font-light-gray">
                     Last generated at: {formattedBuildTime}
@@ -92,6 +93,6 @@ export default async function PostPage({
                 className="prose space-y-6"
                 dangerouslySetInnerHTML={{ __html: body_html }}
             />
-        </main>
+        </>
     );
 }
