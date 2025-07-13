@@ -75,7 +75,7 @@ export interface LargestContentfulPaint {
   duration?: number;
   entryType?: string;
   name?: string;
-  toJSON?: () => any;
+  toJSON?: () => unknown;
 };
 
 export interface WebVital {

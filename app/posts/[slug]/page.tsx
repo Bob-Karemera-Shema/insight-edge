@@ -1,7 +1,6 @@
 import { RevalidateButton } from "@/components/revalidate-button";
 import { enhancePostWithBLur } from "@/lib/enhancePostsWithBlur";
 import { IDetailedPost, IPost } from "@/lib/types";
-import { Metadata } from "next";
 import Image from "next/image";
 
 export const revalidate = 300;
@@ -14,17 +13,6 @@ export async function generateStaticParams() {
         slug: String(post.id)
     }));
 }
-
-export const generateMetadata = async ({ params }: { params: { slug: string } }): Promise<Metadata> => {
-    const { slug } = await params
-    const { title } = await fetch(`https://dev.to/api/articles/${slug}`).then(
-        (res) => res.json()
-    );
-    return {
-        title,
-        description: `Read our article on ${title}`,
-    };
-};
 
 export default async function PostPage({
     params,
