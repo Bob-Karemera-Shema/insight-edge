@@ -28,7 +28,7 @@ export const PostCard = ({ post }: Props) => {
                 height={cover_image ? 420 : 425}
                 placeholder="blur"
                 blurDataURL={coverBlur}
-                className="w-full h-auto object-cover rounded-md"
+                className="w-full h-auto max-h-[143px] object-cover rounded-md"
             />
             <div className="space-y-4 px-1">
                 <span className="py-1 px-2 bg-custom-blue/5 text-sm text-custom-blue font-medium capitalize">{tag_list[0]}</span>
