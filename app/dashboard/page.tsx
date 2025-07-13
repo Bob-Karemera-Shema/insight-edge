@@ -52,7 +52,7 @@ export default function Dashboard() {
 
     return (
         <main className="max-w-5xl w-full min-h-[40vh] mx-auto px-4 lg:px-0">
-            <h1 className="text-2xl font-bold mb-6">Web Vitals</h1>
+            <h1 className="text-3xl font-bold mb-6">Web Vitals</h1>
             {vitals.length === 0 ? (
                 <p className="text-gray-500">
                     No Web Vitals data yet. Interact with the app and reload to collect LCP, FID, and CLS metrics.

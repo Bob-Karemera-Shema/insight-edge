@@ -1,6 +1,7 @@
 import { RevalidateButton } from "@/components/revalidate-button";
 import { enhancePostWithBLur } from "@/lib/enhancePostsWithBlur";
 import { IDetailedPost, IPost } from "@/lib/types";
+import { Metadata } from "next";
 import Image from "next/image";
 
 export const revalidate = 300;
@@ -13,6 +14,16 @@ export async function generateStaticParams() {
         slug: String(post.id)
     }));
 }
+
+export const generateMetadata = async ({ params }: { params: { slug: string } }): Promise<Metadata> => {
+  const { title } = await fetch(`https://dev.to/api/articles/${params.slug}`).then(
+        (res) => res.json()
+    );
+  return {
+    title,
+    description: `Read our article on ${title}`,
+  };
+};
 
 export default async function PostPage({
     params,
@@ -35,7 +46,7 @@ export default async function PostPage({
     }).format(new Date(buildTime));
 
     const postWithBlur = await enhancePostWithBLur(post);
-    const { avatarBlur, body_html, coverBlur, cover_image, published_at, tag_list, user } = postWithBlur;
+    const { avatarBlur, body_html, coverBlur, cover_image, published_at, tag_list, title, user } = postWithBlur;
     const date = new Date(published_at);
     const formattedPublishedDate = new Intl.DateTimeFormat('en-US', {
         month: 'long',
@@ -52,7 +63,7 @@ export default async function PostPage({
                 <RevalidateButton path={`/posts/${slug}`} />
             </div>
             <span className="py-1 px-2 bg-custom-blue/5 text-sm text-custom-blue font-medium capitalize">{tag_list}</span>
-            <h1 className="font-semibold text-4xl mt-4">{postWithBlur.title}</h1>
+            <h1 className="font-semibold text-4xl mt-4">{title}</h1>
             <div className="flex items-center space-x-4">
                 <div className="flex items-center space-x-2">
                     <Image

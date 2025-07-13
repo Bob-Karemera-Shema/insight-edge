@@ -3,6 +3,7 @@ import { NextResponse } from "next/server";
 
 export default auth((req) => {
     const { pathname } = req.nextUrl;
+    const isLoggedIn = !!req.auth;
 
     console.log("Request Headers:", Object.fromEntries(req.headers.entries()));
 
@@ -10,9 +11,11 @@ export default auth((req) => {
     const response = NextResponse.next();
     response.headers.set("x-powered-by", "InsightEdge");
 
-    if (pathname.startsWith("/dashboard")) {
-        const isLoggedIn = !!req.auth;
+    if(['/login', '/register'].includes(pathname) && isLoggedIn) {
+        return NextResponse.redirect(new URL("/", req.url));
+    }
 
+    if (pathname.startsWith("/dashboard")) {
         if (!isLoggedIn) {
             return NextResponse.redirect(new URL("/login", req.url));
         }
@@ -22,5 +25,5 @@ export default auth((req) => {
 })
 
 export const config = {
-    matcher: ["/dashboard/:path*"],
+    matcher: ["/dashboard/:path*", "/login", "/register"],
 };

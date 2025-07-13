@@ -43,7 +43,7 @@ export const LoginForm = () => {
             const message = result.error === "CredentialsSignin" ? "Invalid email or password." : result.error;
             toast.error(message);
         } else {
-            toast.success("Login successful!");
+            toast.success("Login successful! Redirecting...");
             router.push(result?.url || "/");
         }
     }
